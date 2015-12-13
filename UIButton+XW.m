@@ -26,10 +26,12 @@ NSString * const xw_btnCurrentActionBlockKey = nil;
     
     __weak typeof(target) weakTarget = target;
     
+    __weak typeof(self) weakSelf = self;
+    
     //利用 关联对象 给UIButton 增加了一个 block
     [self  setCurrentActionBlock:^{
         //运行时 发送 消息 执行方法
-        ((void (*)(void *, SEL, UIView *))objc_msgSend)((__bridge void *)(weakTarget), action , nil);
+        ((void (*)(void *, SEL, UIButton *))objc_msgSend)((__bridge void *)(weakTarget), action , weakSelf);
     
     }];
     
@@ -43,6 +45,7 @@ NSString * const xw_btnCurrentActionBlockKey = nil;
     //统计 在这个方法中执行想要操作的
     
     self.btnClickedCount++;
+    
     NSLog(@"%@ 点击 %ld次 ",[sender titleForState:UIControlStateNormal], self.btnClickedCount);
     
     
