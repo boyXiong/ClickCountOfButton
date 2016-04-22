@@ -18,10 +18,39 @@ NSString * const xw_btnCurrentActionBlockKey = nil;
 
 @implementation UIButton (XW)
 
-/** 拦截了UIButton 所有的
- - (void)addTarget:(nullable id)target action:(SEL)action forControlEvents:(UIControlEvents)controlEvents;
- 方法*/
-- (void)addTarget:(nullable id)target action:(SEL)action forControlEvents:(UIControlEvents)controlEvents{
++ (void)load{
+    
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        
+        SEL origilaSEL = @selector(addTarget: action: forControlEvents:);
+        
+        SEL hook_SEL = @selector(xw_addTarget: action: forControlEvents:);
+        
+        //交换方法
+        Method origilalMethod = class_getInstanceMethod(self, origilaSEL);
+        
+        
+        Method hook_method = class_getInstanceMethod(self, hook_SEL);
+        
+        
+        class_addMethod(self,
+                        origilaSEL,
+                        class_getMethodImplementation(self, origilaSEL),
+                        method_getTypeEncoding(origilalMethod));
+        
+        class_addMethod(self,
+                        hook_SEL,
+                        class_getMethodImplementation(self, hook_SEL),
+                        method_getTypeEncoding(hook_method));
+        
+        method_exchangeImplementations(class_getInstanceMethod(self, origilaSEL), class_getInstanceMethod(self, hook_SEL));
+        
+    });
+    
+}
+
+- (void)xw_addTarget:(nullable id)target action:(SEL)action forControlEvents:(UIControlEvents)controlEvents{
     
     
     __weak typeof(target) weakTarget = target;
@@ -37,7 +66,7 @@ NSString * const xw_btnCurrentActionBlockKey = nil;
     
     
     //拦截了本身要执行的action 先执行，写下来的 xw_clicked:方法
-    [super addTarget:self action:@selector(xw_clicked:) forControlEvents:controlEvents];
+    [self xw_addTarget:self action:@selector(xw_clicked:) forControlEvents:controlEvents];
 }
 
 //拦截了按钮点击后要执行的代码
