@@ -65,7 +65,7 @@ NSString * const xw_btnCurrentActionBlockKey = nil;
     }];
     
     
-    //拦截了本身要执行的action 先执行，写下来的 xw_clicked:方法
+    //发送消息 其实是本身  要执行的action 先执行，写下来的 xw_clicked:方法
     [self xw_addTarget:self action:@selector(xw_clicked:) forControlEvents:controlEvents];
 }
 
