@@ -58,11 +58,17 @@ NSString * const xw_btnCurrentActionBlockKey = nil;
     __weak typeof(self) weakSelf = self;
     
     //利用 关联对象 给UIButton 增加了一个 block
-    [self  setCurrentActionBlock:^{
-        //运行时 发送 消息 执行方法
-        ((void (*)(void *, SEL, UIButton *))objc_msgSend)((__bridge void *)(weakTarget), action , weakSelf);
-    
-    }];
+    if (action) {
+        
+        [self  setCurrentActionBlock:^{
+            @try {
+                 ((void (*)(void *, SEL,  typeof(weakSelf) ))objc_msgSend)((__bridge void *)(weakTarget), action , weakSelf);
+            } @catch (NSException *exception) {
+            } @finally {
+            }
+           
+        }];
+    }
     
     
     //发送消息 其实是本身  要执行的action 先执行，写下来的 xw_clicked:方法
@@ -78,10 +84,24 @@ NSString * const xw_btnCurrentActionBlockKey = nil;
     NSLog(@"%@ 点击 %ld次 ",[sender titleForState:UIControlStateNormal], self.btnClickedCount);
     
     
-    
     //执行原来要执行的方法
     sender.currentActionBlock();
 }
+
+
+
+//增加一个 block 关联UIButton
+- (void)setCurrentActionBlock:(void (^)())currentActionBlock{
+    
+     objc_setAssociatedObject(self, &xw_btnCurrentActionBlockKey, currentActionBlock, OBJC_ASSOCIATION_COPY_NONATOMIC);
+}
+
+- (void (^)())currentActionBlock{
+    return objc_getAssociatedObject(self, &xw_btnCurrentActionBlockKey);
+}
+
+
+#pragma mark -统计
 
 //在分类中增加了 btnClickedCount的 (setter 和 getter）方法，使用关联对象增加了相关的成员空间
 - (NSInteger)btnClickedCount{
@@ -93,17 +113,6 @@ NSString * const xw_btnCurrentActionBlockKey = nil;
 
 - (void)setBtnClickedCount:(NSInteger)btnClickedCount{
     objc_setAssociatedObject(self, &xw_btnClickedCountKey, @(btnClickedCount), OBJC_ASSOCIATION_ASSIGN);
-}
-
-
-//增加一个 block 关联UIButton
-- (void)setCurrentActionBlock:(void (^)())currentActionBlock{
-    
-     objc_setAssociatedObject(self, &xw_btnCurrentActionBlockKey, currentActionBlock, OBJC_ASSOCIATION_COPY_NONATOMIC);
-}
-
-- (void (^)())currentActionBlock{
-    return objc_getAssociatedObject(self, &xw_btnCurrentActionBlockKey);
 }
 
 @end

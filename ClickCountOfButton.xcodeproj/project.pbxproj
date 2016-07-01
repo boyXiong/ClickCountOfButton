@@ -13,7 +13,7 @@
 		EA3DC3731BD882220097C899 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EA3DC3711BD882220097C899 /* Main.storyboard */; };
 		EA3DC3751BD882220097C899 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EA3DC3741BD882220097C899 /* Assets.xcassets */; };
 		EA3DC3781BD882220097C899 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EA3DC3761BD882220097C899 /* LaunchScreen.storyboard */; };
-		EA3DC3811BD882470097C899 /* UIButton+XW.m in Sources */ = {isa = PBXBuildFile; fileRef = EA3DC3801BD882470097C899 /* UIButton+XW.m */; settings = {ASSET_TAGS = (); }; };
+		EA3DC3811BD882470097C899 /* UIButton+XW.m in Sources */ = {isa = PBXBuildFile; fileRef = EA3DC3801BD882470097C899 /* UIButton+XW.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -268,7 +268,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = ClickCountOfButton/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "Xiong-Wei.ClickCountOfButton";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -280,7 +280,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = ClickCountOfButton/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "Xiong-Wei.ClickCountOfButton";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -306,6 +306,7 @@
 				EA3DC37E1BD882220097C899 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
